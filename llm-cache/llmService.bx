@@ -1,0 +1,81 @@
+class {
+
+	public function init() {
+		return this;
+	}
+
+
+	public function chatWithLLM(text) {
+		var aiService = aiService();
+		var chatRequest = aiChatRequest(arguments.text);
+		chatRequest.setReturnFormat('raw');
+		chatRequest.setParams({
+		"contents": [{
+					"role" : "user",
+					"parts": [ {
+						"text": arguments.text
+					} ]
+				}
+			]
+		});
+		fullResponse = aiService.invoke( chatRequest );
+		response = fullResponse.candidates[1].content.parts[1].text;
+		return response;
+	}
+
+
+	public function embed(text) {
+		if(!IsArray(arguments.text)){
+			arguments.text = [arguments.text];
+		}
+
+		var arText = arguments.text.map( part -> {
+			return {"text": part};
+		})
+
+		var aiService = aiService();
+		var embedURL = aiService.getChatURL().replace('generateContent','embedContent');
+		aiService.setChatURL(embedURL);
+
+		var chatRequest = aiChatRequest(arguments.text);
+		chatRequest.setModel('text-embedding-004');
+		chatRequest.setReturnFormat('raw');
+
+		chatRequest.setParams({
+			"model": "text-embedding-004",
+			"content": {
+				"parts": arText
+			},
+			"taskType": "retrieval_document"
+		});
+
+		return aiService.invoke( chatRequest )
+	}
+
+
+	public function batchEmbed(array text) {
+		var arText = arguments.text.map( part -> {
+			return {
+				"model": "models/text-embedding-004",
+				"content": {
+					"parts": {"text": part}
+				},
+				"taskType": "retrieval_document"
+			}
+		})
+
+		var aiService = aiService();
+		var embedURL = aiService.getChatURL().replace('generateContent','batchEmbedContents');
+		aiService.setChatURL(embedURL);
+
+		var chatRequest = aiChatRequest(arguments.text);
+		chatRequest.setModel('text-embedding-004');
+		chatRequest.setReturnFormat('raw');
+
+		chatRequest.setParams({
+			"requests": arText
+		});
+
+		return aiService.invoke( chatRequest )
+	}
+}

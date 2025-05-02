@@ -1,0 +1,11 @@
+{
+	"modules": {
+		"bxai": {
+			"provider": "gemini",
+			"apiKey": "<nice try punk>",
+			"defaultParams": {
+				"model": "gemini-2.0-flash"
+			}
+		}
+	}
+}

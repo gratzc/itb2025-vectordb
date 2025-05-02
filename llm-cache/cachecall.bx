@@ -1,0 +1,202 @@
+//Couchbase classes from Java
+import com.couchbase.client.java.Bucket;
+import com.couchbase.client.java.Cluster;
+import com.couchbase.client.java.Collection;
+import com.couchbase.client.java.Scope;
+
+//LangChain classes from Java
+import dev.langchain4j.data.embedding.Embedding;
+import dev.langchain4j.data.segment.TextSegment;
+import dev.langchain4j.store.embedding.couchbase.CouchbaseEmbeddingStore;
+
+class cachecall {
+cbUsername = getSystemSetting('cbUsername');
+	cbPassword = getSystemSetting('cbPassword');
+	cbHostname = getSystemSetting('cbHostname');
+	cbBucket = getSystemSetting('cbBucket');
+	cbScope = getSystemSetting('cbScope');
+	cbCollection = getSystemSetting('cbCollection');
+	cbSearchIndex = getSystemSetting('cbSearchIndex');
+	llmService = new llmService();
+	function main() {
+		try {
+			flushData();
+			Sleep(3000)
+			printLn('-------  First Pass, nothing in cache  -------')
+			for (query in ['What is Lumon?','Who is Mark S in Serverance?', 'Why are there goats on the servered floor?']) {
+				b = GetTickCount();
+				printLn("------ Query: #query# ------")
+				dump(askTheLLM(query));
+				e = GetTickCount();
+				dump('took #e-b#ms to complete')
+			}
+			Sleep(3000)
+			printLn('-------  Second Pass, Should be in cache, asking the same question  -------')
+			for (query in ['What is Lumon?','Who is Mark S in Serverance?', 'Why are there goats on the servered floor?']) {
+				b = GetTickCount();
+				printLn("------ Query: #query# ------")
+				dump(askTheLLM(query));
+				e = GetTickCount();
+				dump('took #e-b#ms to complete')
+			}
+			Sleep(3000)
+			printLn('-------  3rd Pass, Should be in cache, asking the similar question  -------')
+			for (query in ['What is Lumon in AppleTV','Who is Mark S ?', 'Why are there goats in Serverance?']) {
+				b = GetTickCount();
+				printLn("------ Query: #query# ------")
+				dump(askTheLLM(query));
+				e = GetTickCount();
+				dump('took #e-b#ms to complete')
+			}
+		} catch (Exception e) {
+			rethrow;
+			println("An error occurred: #e.getMessage()#");
+			return;
+		}
+	}
+
+
+	function askTheLLM(query) {
+		//Check for exact call
+		response = checkExact(query);
+		if(len(response)) return response;
+		//Check for semantic call
+		response = checkSemantic(query);
+		if(len(response)) return response;
+		//No result yet, call LLM
+		response = llmService.chatWithLLM(query);
+
+		//save LLM call/response as doc
+		saveLLMResponse(query,response);
+		//save LLM call as embedding for semantic search
+		createEmbeddings([query]);
+
+		return response;
+	}
+
+
+	function createEmbeddings(textToEmbed,useSavedFile=true) {
+		embeddingStre = getEmbeddingStore();
+
+		e = llmService.batchEmbed(textToEmbed);
+
+		arE = [];
+		index=0
+
+		for (var ar in e.embeddings) {
+			index++;
+			arFloats = ar.values.map(value->JavaCast('float',value));
+			oem = new Embedding(arFloats);
+			embeddingStre.add(oem,TextSegment.from(textToEmbed[index]));
+		}
+		println("Data embedded and saved to Couchbase");
+	}
+
+
+	function getEmbeddingStore() {
+		if(!StructKeyExists(this,'embeddingStore')){
+			this.embeddingStore = CouchbaseEmbeddingStore.builder()
+			.clusterUrl(cbHostname)
+			.username(cbUsername)
+			.password(cbPassword)
+			.bucketName(cbBucket)
+			.scopeName(cbScope)
+			.collectionName(cbCollection)
+			.searchIndexName(cbSearchIndex)
+			.dimensions(768)
+			.build();
+		}
+
+		return this.embeddingStore
+	}
+
+
+	function flushData() {
+		cl = getCluster();
+		cl.buckets().flushBucket(cbBucket);
+		println("Old Data Purged");
+	}
+
+
+	function checkExact(call) {
+		cl = getCluster();
+		b = getBucket(cl, cbBucket);
+		s = getScope(b, cbScope);
+
+		coll = b.defaultCollection();
+
+		nql = "select * from #cbBucket#.#cbScope#._default where question = '#call#'";
+
+		results = cl.query(nql);
+
+		if(ArrayLen(results.rowsAsObject())){
+			return results.rowsAsObject()[1].toMap()["_default"].response;
+		}
+
+		return ""
+	}
+
+
+	function checkSemantic(call) {
+		embeddingStre = getEmbeddingStore();
+		r = llmService.embed(arguments.call);
+		qEmbed = r.embedding.values.map(value -> {
+			return JavaCast('float',value)
+		});
+		oembed = new Embedding(qEmbed);
+		results = embeddingStre.findRelevant(oembed, 1);
+
+		if(ArrayLen(results) && results[1].score() > .90) {
+			dump(results[1].score())
+			return checkExact(results[1].embedded().text())
+		}
+		return "";
+	}
+
+
+	function saveLLMResponse(call,response) {
+		cl = getCluster();
+		b = getBucket(cl, cbBucket);
+		s = getScope(b, cbScope);
+
+		coll = b.defaultCollection();
+
+		coll.upsert(
+				createUUID(),
+				{
+					"question":arguments.call,
+					"response":arguments.response
+				}
+		);
+
+	}
+
+
+	function getCluster() {
+		if(!StructKeyExists(this,'cluster')){
+			this.cluster = Cluster.connect(cbHostname, cbUsername, cbPassword);
+		}
+		return this.cluster
+	}
+
+
+	function getBucket(Cluster cl, String bucketName) {
+		try {
+			return cl.bucket(bucketName);
+		} catch (com.couchbase.client.java.BucketNotFoundException ex) {
+			return null;
+		} catch (Exception e) {
+			rethrow;
+		}
+	}
+
+
+	function getScope(Bucket b, String scopeName) {
+		for (s in b.collections().getAllScopes()) {
+			if (s.name().equals(scopeName)) {
+				return s;
+			}
+		}
+		return null;
+	}
+}

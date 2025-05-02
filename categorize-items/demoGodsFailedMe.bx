@@ -1,0 +1,29 @@
+class cachecall {
+	function main() {
+		dump('
+Old Data Purged
+Data embedded and saved to Couchbase
+------ Query: Coffee Cozies ------
+0.8752326483694994
+Iceberg Print
+0.8502649212834833
+Finger Traps
+0.8494054670849418
+Erasers
+------ Query: Goodbye, Things ------
+0.8982947033147184
+The You You Are (Book)
+0.8796948684213131
+Kier Pardons His Betrayers
+0.8747505434787431
+Hall Pass
+------ Query: Portraiture of Kier Eagan ------
+0.8696316444940051
+Kier Pardons His Betrayers
+0.8598723605425967
+Kier Invites You to Drink of His Water
+0.8596324344613478
+The You You Are (Book)
+		')
+	}
+}

@@ -1,0 +1,81 @@
+class cachecall {
+	function main() {
+		dump('
+Old Data Purged
+-------  First Pass, nothing in cache  -------
+What is Lumon?
+[2025-04-30T17:48:09,979] [cb-events] [WARN ] [com.couchbase.core] [com.couchbase.core][TooManyInstancesDetectedEvent] The number of simultaneously connected Cluster instances (2) exceeds the configurable warning threshold of 1. This is a diagnostic message to help detect potential resource leaks and inefficient usage patterns. If you actually intended to create this many instances, please ignore this warning, or increase the warning threshold by calling Cluster.maxAllowedInstances(int) on startup. However, if you did not intend to have 2 Cluster instances connected at the same time, this warning may indicate a resource leak. In that case, please make sure to call cluster.disconnect() after a Cluster and its associated Buckets, Scopes, Collections, etc. are no longer required by your application. Also note that Cluster, Bucket, Scope, and Collection instances are thread-safe and reusable until the Cluster is disconnected; for best performance, reuse the same instances throughout your application''s lifetime.
+Data embedded and saved to Couchbase
+Lumon Industries is a fictional mega-corporation at the center of the Apple TV+ science fiction psychological thriller series *Severance*. It is a mysterious and highly secretive company with a vast, sprawling headquarters.
+
+Here''s a breakdown of what''s known about Lumon within the show:
+
+*   **Core Business:** While the exact nature of Lumon''s business is kept deliberately vague, it appears to be involved in multiple industries, including biotechnology, optics, and data refinement. However, the company''s true purpose remains one of the show''s central mysteries.
+
+*   **Severance Procedure:** Lumon is infamous for its "severance" procedure, a brain surgery that divides an employee''s memories between their work life and their personal life. Severed employees have no recollection of their outside lives while at work, and vice versa. This creates two distinct personas: the "innie" (the work persona) and the "outie" (the personal life persona).
+
+*   **Cult-like Culture:** Lumon cultivates a highly controlled and bizarre corporate culture within its severed floors. Employees are subjected to strange and often unexplained protocols, rituals, and rewards, all designed to reinforce their loyalty and obedience. The company is heavily influenced by the teachings of its founder, Kier Eagan, who is revered almost religiously.
+
+*   **Secrecy and Control:** Lumon is obsessed with secrecy and control. Severed employees are constantly monitored, and any deviation from company protocol is met with swift and often unsettling consequences. The company seems to have extensive resources and influence, and its activities are shrouded in mystery.
+
+*   **Eagan Family Legacy:** Lumon is deeply intertwined with the Eagan family, its founders. The Eagan family''s philosophy and teachings are central to Lumon''s ideology, and their legacy continues to shape the company''s operations. The Eagans are treated with an almost religious reverence within Lumon.
+
+In essence, Lumon Industries is presented as a powerful, enigmatic, and ethically questionable corporation that pushes the boundaries of technology and corporate control, all while concealing its true motives.
+took 4422ms to complete
+Who is Mark S in Serverance?
+Data embedded and saved to Couchbase
+Mark S. is the main protagonist of the Apple TV+ series "Severance," played by Adam Scott. Here''s a breakdown of who he is:
+
+*   **Innie:** Mark is an employee at Lumon Industries who has undergone the "severance" procedure. This procedure surgically divides an employee''s memories between their work life (the "innie") and personal life (the "outie"). As an "innie" at Lumon, Mark works in the Macrodata Refinement (MDR) department. He''s seen as a conscientious and somewhat reserved employee who follows protocol. He is promoted to department head after the departure of Petey Kilmer.
+*   **Outie:** Outside of Lumon, Mark is a grieving widower. His wife, Gemma, died in a car accident a couple of years prior to the start of the series. He initially chose severance as a way to escape his grief during the workday. He teaches a grief support group.
+*   **Key Conflicts and Mysteries:** Mark is central to the show''s mysteries. Throughout the first season, both his "innie" and "outie" selves begin to question the nature of Lumon and the severance procedure. His "innie" is particularly driven by the reappearance of his best friend Petey, who was his fellow employee before his unexpected death. His "outie" experiences unsettling events, suggesting that his "innie''s" actions are affecting his life outside of work, and meets a woman who bears an uncanny resemblance to his deceased wife.
+took 3171ms to complete
+Why are there goats on the servered floor?
+Data embedded and saved to Couchbase
+The presence of goats on a "served floor" is unusual and suggests a very strange or humorous situation. Here are some possible explanations, ranging from the plausible to the absurd:
+
+**Plausible (but unlikely):**
+
+*   **Misunderstanding/Typo:** Perhaps there''s a typo, and the location is not a "served floor" but something else entirely. Maybe it''s a farm, a rural area, or a place where goats are normally found.
+*   **Agricultural Research:** The floor might be part of an agricultural research facility where they are studying goats.
+*   **Performance Art/Event:** It could be part of a bizarre art installation or a very unconventional event.
+*   **Lost and Confused Goats:** The goats might have escaped from a nearby enclosure and wandered into an unexpected area.
+*   **Symbolism:** In some cultures, goats hold symbolic meaning. Their presence could have symbolic representation in the surrounding context.
+
+**Humorous/Absurd:**
+
+*   **Someone played a prank:** This is a classic silly scenario.
+*   **It''s a dream:** This could be the result of a vivid dream.
+*   **A magical portal opened:** Why not? Goats popping through from another dimension!
+*   **The restaurant''s new ''live action'' menu:** An extremely unconventional (and likely illegal) dining experience.
+*   **The goats are the servers:** This is the ultimate absurd image!
+
+Without more context, it''s difficult to say for sure. The most likely explanation depends on the specific situation and where you encountered this question.
+took 3185ms to complete
+-------  Second Pass, Should be in cache, asking the same question  -------
+What is Lumon?
+[{"_default":{"question":"What is Lumon?","response":"Lumon Industries is a fictional mega-corporation at the center of the Apple TV+ science fiction psychological thriller series *Severance*. It is a mysterious and highly secretive company with a vast, sprawling headquarters.\n\nHere''s a breakdown of what''s known about Lumon within the show:\n\n*   **Core Business:** While the exact nature of Lumon''s business is kept deliberately vague, it appears to be involved in multiple industries, including biotechnology, optics, and data refinement. However, the company''s true purpose remains one of the show''s central mysteries.\n\n*   **Severance Procedure:** Lumon is infamous for its \"severance\" procedure, a brain surgery that divides an employee''s memories between their work life and their personal life. Severed employees have no recollection of their outside lives while at work, and vice versa. This creates two distinct personas: the \"innie\" (the work persona) and the \"outie\" (the personal life persona).\n\n*   **Cult-like Culture:** Lumon cultivates a highly controlled and bizarre corporate culture within its severed floors. Employees are subjected to strange and often unexplained protocols, rituals, and rewards, all designed to reinforce their loyalty and obedience. The company is heavily influenced by the teachings of its founder, Kier Eagan, who is revered almost religiously.\n\n*   **Secrecy and Control:** Lumon is obsessed with secrecy and control. Severed employees are constantly monitored, and any deviation from company protocol is met with swift and often unsettling consequences. The company seems to have extensive resources and influence, and its activities are shrouded in mystery.\n\n*   **Eagan Family Legacy:** Lumon is deeply intertwined with the Eagan family, its founders. The Eagan family''s philosophy and teachings are central to Lumon''s ideology, and their legacy continues to shape the company''s operations. The Eagans are treated with an almost religious reverence within Lumon.\n\nIn essence, Lumon Industries is presented as a powerful, enigmatic, and ethically questionable corporation that pushes the boundaries of technology and corporate control, all while concealing its true motives."}}]
+took 120ms to complete
+Who is Mark S in Serverance?
+[{"_default":{"question":"Who is Mark S in Serverance?","response":"Mark S. is the main protagonist of the Apple TV+ series \"Severance,\" played by Adam Scott. Here''s a breakdown of who he is:\n\n*   **Innie:** Mark is an employee at Lumon Industries who has undergone the \"severance\" procedure. This procedure surgically divides an employee''s memories between their work life (the \"innie\") and personal life (the \"outie\"). As an \"innie\" at Lumon, Mark works in the Macrodata Refinement (MDR) department. He''s seen as a conscientious and somewhat reserved employee who follows protocol. He is promoted to department head after the departure of Petey Kilmer.\n*   **Outie:** Outside of Lumon, Mark is a grieving widower. His wife, Gemma, died in a car accident a couple of years prior to the start of the series. He initially chose severance as a way to escape his grief during the workday. He teaches a grief support group.\n*   **Key Conflicts and Mysteries:** Mark is central to the show''s mysteries. Throughout the first season, both his \"innie\" and \"outie\" selves begin to question the nature of Lumon and the severance procedure. His \"innie\" is particularly driven by the reappearance of his best friend Petey, who was his fellow employee before his unexpected death. His \"outie\" experiences unsettling events, suggesting that his \"innie''s\" actions are affecting his life outside of work, and meets a woman who bears an uncanny resemblance to his deceased wife."}}]
+took 91ms to complete
+Why are there goats on the servered floor?
+[{"_default":{"question":"Why are there goats on the servered floor?","response":"The presence of goats on a \"served floor\" is unusual and suggests a very strange or humorous situation. Here are some possible explanations, ranging from the plausible to the absurd:\n\n**Plausible (but unlikely):**\n\n*   **Misunderstanding/Typo:** Perhaps there''s a typo, and the location is not a \"served floor\" but something else entirely. Maybe it''s a farm, a rural area, or a place where goats are normally found.\n*   **Agricultural Research:** The floor might be part of an agricultural research facility where they are studying goats.\n*   **Performance Art/Event:** It could be part of a bizarre art installation or a very unconventional event.\n*   **Lost and Confused Goats:** The goats might have escaped from a nearby enclosure and wandered into an unexpected area.\n*   **Symbolism:** In some cultures, goats hold symbolic meaning. Their presence could have symbolic representation in the surrounding context.\n\n**Humorous/Absurd:**\n\n*   **Someone played a prank:** This is a classic silly scenario.\n*   **It''s a dream:** This could be the result of a vivid dream.\n*   **A magical portal opened:** Why not? Goats popping through from another dimension!\n*   **The restaurant''s new ''live action'' menu:** An extremely unconventional (and likely illegal) dining experience.\n*   **The goats are the servers:** This is the ultimate absurd image!\n\nWithout more context, it''s difficult to say for sure. The most likely explanation depends on the specific situation and where you encountered this question."}}]
+took 86ms to complete
+-------  3rd Pass, Should be in cache, asking the similar question  -------
+What is Lumon in AppleTV
+0.9230292960931314
+0.9230292960931314
+took 325ms to complete
+Who is Mark S ?
+0.937396133408644
+0.937396133408644
+took 301ms to complete
+Why are there goats in Serverance?
+0.9345583620486668
+0.9345583620486668
+took 296ms to complete
+
+		')
+	}
+}

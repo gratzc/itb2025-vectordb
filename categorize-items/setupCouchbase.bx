@@ -1,0 +1,86 @@
+//Couchbase classes from Java
+import com.couchbase.client.java.Bucket;
+import com.couchbase.client.java.Cluster;
+import com.couchbase.client.java.Collection;
+import com.couchbase.client.java.Scope;
+
+//LangChain classes from Java
+import dev.langchain4j.data.embedding.Embedding;
+import dev.langchain4j.data.segment.TextSegment;
+import dev.langchain4j.store.embedding.couchbase.CouchbaseEmbeddingStore;
+
+class categoriezeItems {
+	cbUsername = getSystemSetting('cbUsername');
+	cbPassword = getSystemSetting('cbPassword');
+	cbHostname = getSystemSetting('cbHostname');
+	cbBucket = getSystemSetting('cbBucket');
+	cbScope = getSystemSetting('cbScope');
+	cbCollection = getSystemSetting('cbCollection');
+	cbSearchIndex = getSystemSetting('cbSearchIndex');
+	embeddingService = new embeddingService();
+	function main() {
+		setupCouchbase()
+	}
+
+	function setupCouchbase() {
+		cl = Cluster.connect(cbHostname, cbUsername, cbPassword);
+
+		b = getBucket(cl, cbBucket);
+
+		if (b == null) {
+			Println("Add the #cbBucket# bucket to your couchbase");
+		} else {
+			println("Bucket #cbBucket# is present.");
+		}
+
+		s = getScope(b, cbScope);
+		if (s == null) {
+			Println("Run setup, #cbScope# scope is missing");
+		} else {
+			println("Scope #cbScope# is present.");
+		}
+
+		coll = getCollection(b, cbScope, cbCollection);
+		if (coll == null) {
+			Println("Run setup, #cbCollection# collection is missing");
+		} else {
+			println("Collection #cbCollection# is present.");
+		}
+	}
+
+
+	function getBucket(Cluster cl, String bucketName) {
+		try {
+			return cl.bucket(bucketName);
+		} catch (com.couchbase.client.java.BucketNotFoundException ex) {
+			return null;
+		} catch (Exception e) {
+			rethrow;
+		}
+	}
+
+
+	function getScope(Bucket b, String scopeName) {
+		for (s in b.collections().getAllScopes()) {
+			if (s.name().equals(scopeName)) {
+				return s;
+			}
+		}
+		return null;
+	}
+
+
+	function getCollection(Bucket b, String scopeName, String collectionName) {
+		s = getScope(b, scopeName);
+		writeDump(s.collections())
+		if (s != null) {
+			for (c in s.collections()) {
+				if (c.name().equals(collectionName)) {
+					return c;
+				}
+			}
+		}
+		return null;
+	}
+
+}

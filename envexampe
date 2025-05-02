@@ -1,0 +1,7 @@
+export cbUsername="YourUser"
+export cbPassword="YourPassword"
+export cbHostname="localhost"
+export cbBucket="itbVector";
+export cbScope="_default";
+export cbCollection="simpleVector";
+export cbSearchIndex="testIndex";

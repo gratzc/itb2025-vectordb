@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Color Picker</title>
+	<link rel="stylesheet" href="styles.css">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+	<div class="container">
+		<h1>Color Picker</h1>
+		<div class="search-container">
+			<div class="search-section">
+				<label for="searchInput">Search by name:</label>
+				<input type="text" id="searchInput" placeholder="Search colors...">
+			</div>
+			<div class="search-section">
+				<label for="vectorSearchInput">Search by color:</label>
+				<input type="text" id="vectorSearchInput" placeholder="Enter a color name (e.g., Red, Blue, Green)">
+			</div>
+			<div class="button-group">
+				<button id="showVectorsBtn" class="show-vectors-btn">Vectors</button>
+				<button id="resetBtn" class="reset-btn">Reset</button>
+			</div>
+		</div>
+		<div class="vector-visualization">
+			<canvas id="vectorChart"></canvas>
+			<div class="vector-legend">
+				<div class="legend-item">
+					<span class="legend-dot selected"></span>
+					<span>Selected Color</span>
+				</div>
+				<div class="legend-item">
+					<span class="legend-dot similar"></span>
+					<span>Similar Colors</span>
+				</div>
+			</div>
+		</div>
+		<div class="color-grid" id="colorGrid"></div>
+		<div class="selected-color" id="selectedColor">
+			<div class="selected-color-swatch" id="selectedColorSwatch"></div>
+			<div class="color-name" id="selectedColorName"></div>
+			<div class="rgb-values" id="selectedColorRGB"></div>
+			<button id="findSimilarBtn" class="find-similar-btn">Find Similar Colors</button>
+		</div>
+	</div>
+	<script src="script.js"></script>
+</body>
+</html>
